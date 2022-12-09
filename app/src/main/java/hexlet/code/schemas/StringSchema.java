@@ -1,8 +1,10 @@
-package hexlet.code;
+package hexlet.code.schemas;
 
 import java.util.HashSet;
 import java.util.Set;
 import java.util.function.BiPredicate;
+
+import hexlet.code.Schema;
 
 public class StringSchema implements Schema {
     private final Set<Constraints> constraints = new HashSet<>(Set.of(Constraints.IS_STRING));
@@ -42,7 +44,6 @@ public class StringSchema implements Schema {
         REQUIRED((schema, value) -> value != null && ((String) value).length() > 0),
         MIN_LENGTH((schema, value) -> ((String) value).length() >= schema.minLength),
         CONTAINS((schema, value) -> ((String) value).contains(schema.substringToContain));
-
         private final BiPredicate<StringSchema, Object> isValid;
 
         Constraints(BiPredicate<StringSchema, Object> isValid) {

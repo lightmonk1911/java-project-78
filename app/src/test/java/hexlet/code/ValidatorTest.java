@@ -4,6 +4,8 @@ import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.TestInstance;
 
+import hexlet.code.schemas.NumberSchema;
+import hexlet.code.schemas.StringSchema;
 import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
@@ -45,5 +47,28 @@ final class ValidatorTest {
         schema.minLength(10);
         assertFalse(schema.isValid("whatthe"));
         assertTrue(schema.isValid("whatthewhatthe"));
+    }
+
+    @Test
+    void testNumberSchema() {
+        NumberSchema schema = validator.number();
+
+        assertTrue(schema.isValid(null));
+        assertTrue(schema.positive().isValid(null));
+
+        schema.required();
+
+        assertFalse(schema.isValid(null));
+        assertTrue(schema.isValid(10));
+        assertFalse(schema.isValid("5"));
+        assertFalse(schema.isValid(-10));
+        assertFalse(schema.isValid(0));
+
+        schema.range(5, 10);
+
+        assertTrue(schema.isValid(5));
+        assertTrue(schema.isValid(10));
+        assertFalse(schema.isValid(4));
+        assertFalse(schema.isValid(11));
     }
 }
