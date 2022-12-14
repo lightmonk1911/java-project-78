@@ -4,7 +4,7 @@ import java.util.function.BiPredicate;
 
 import hexlet.code.Schema;
 
-public class StringSchema extends AbstractSchema<StringSchema> implements Schema, BaseSchema {
+public final class StringSchema extends AbstractSchema<StringSchema> implements Schema, BaseSchema {
     private int minLength;
     private String substringToContain;
 
@@ -36,8 +36,8 @@ public class StringSchema extends AbstractSchema<StringSchema> implements Schema
         CONTAINS((schema, value) -> ((String) value).contains(schema.substringToContain));
         private final BiPredicate<StringSchema, Object> isValid;
 
-        Constraints(BiPredicate<StringSchema, Object> isValid) {
-            this.isValid = isValid;
+        Constraints(BiPredicate<StringSchema, Object> validate) {
+            this.isValid = validate;
         }
     }
 }

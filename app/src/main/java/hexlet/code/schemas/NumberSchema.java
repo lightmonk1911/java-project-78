@@ -4,7 +4,7 @@ import java.util.function.BiPredicate;
 
 import hexlet.code.Schema;
 
-public class NumberSchema extends AbstractSchema<NumberSchema> implements Schema, BaseSchema {
+public final class NumberSchema extends AbstractSchema<NumberSchema> implements Schema, BaseSchema {
     private int min;
     private int max;
 
@@ -37,8 +37,8 @@ public class NumberSchema extends AbstractSchema<NumberSchema> implements Schema
 
         private final BiPredicate<NumberSchema, Object> isValid;
 
-        Constraints(BiPredicate<NumberSchema, Object> isValid) {
-            this.isValid = isValid;
+        Constraints(BiPredicate<NumberSchema, Object> validate) {
+            this.isValid = validate;
         }
     }
 }

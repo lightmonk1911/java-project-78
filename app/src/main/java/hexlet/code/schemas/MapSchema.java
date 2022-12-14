@@ -5,7 +5,7 @@ import java.util.function.BiPredicate;
 
 import hexlet.code.Schema;
 
-public class MapSchema extends AbstractSchema<MapSchema> implements Schema {
+public final class MapSchema extends AbstractSchema<MapSchema> implements Schema {
     private int size;
     private Map<?, BaseSchema> shape;
 
@@ -46,8 +46,8 @@ public class MapSchema extends AbstractSchema<MapSchema> implements Schema {
         });
         private final BiPredicate<MapSchema, Object> isValid;
 
-        Constraints(BiPredicate<MapSchema, Object> isValid) {
-            this.isValid = isValid;
+        Constraints(BiPredicate<MapSchema, Object> validate) {
+            this.isValid = validate;
         }
     }
 }
