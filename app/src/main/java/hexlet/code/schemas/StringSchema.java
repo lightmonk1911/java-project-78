@@ -6,7 +6,7 @@ import java.util.function.BiPredicate;
 
 import hexlet.code.Schema;
 
-public class StringSchema implements Schema {
+public class StringSchema implements Schema, BaseSchema {
     private final Set<Constraints> constraints = new HashSet<>(Set.of(Constraints.IS_STRING));
     private int minLength;
     private String substringToContain;

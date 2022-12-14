@@ -6,7 +6,7 @@ import java.util.function.BiPredicate;
 
 import hexlet.code.Schema;
 
-public class NumberSchema implements Schema {
+public class NumberSchema implements Schema, BaseSchema {
     private final Set<Constraints> constraints = new HashSet<>(Set.of(Constraints.IS_NUMBER));
     private int min;
     private int max;
@@ -22,17 +22,17 @@ public class NumberSchema implements Schema {
         return true;
     }
 
-    public Schema positive() {
+    public NumberSchema positive() {
         this.constraints.add(Constraints.POSITIVE);
         return this;
     }
 
-    public Schema required() {
+    public NumberSchema required() {
         this.constraints.add(Constraints.REQUIRED);
         return this;
     }
 
-    public Schema range(int minValue, int maxValue) {
+    public NumberSchema range(int minValue, int maxValue) {
         this.min = minValue;
         this.max = maxValue;
         this.constraints.add(Constraints.RANGE);
