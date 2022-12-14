@@ -23,7 +23,7 @@ public class StringSchema extends AbstractSchema<StringSchema> implements Schema
         return this;
     }
 
-    public Schema contains(String substring) {
+    public StringSchema contains(String substring) {
         constraints.add(Constraints.CONTAINS.isValid);
         this.substringToContain = substring;
         return this;
