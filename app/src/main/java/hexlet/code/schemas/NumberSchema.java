@@ -1,41 +1,31 @@
 package hexlet.code.schemas;
 
-import java.util.HashSet;
-import java.util.Set;
 import java.util.function.BiPredicate;
 
 import hexlet.code.Schema;
 
-public class NumberSchema implements Schema, BaseSchema {
-    private final Set<Constraints> constraints = new HashSet<>(Set.of(Constraints.IS_NUMBER));
+public class NumberSchema extends AbstractSchema<NumberSchema> implements Schema, BaseSchema {
     private int min;
     private int max;
 
-    @Override
-    public boolean isValid(Object value) {
-        for (Constraints constraint : Constraints.values()) {
-            if (constraints.contains(constraint) && !constraint.isValid.test(this, value)) {
-                return false;
-            }
-        }
-
-        return true;
+    public NumberSchema() {
+        this.constraints.add(Constraints.IS_NUMBER.isValid);
     }
 
     public NumberSchema positive() {
-        this.constraints.add(Constraints.POSITIVE);
+        this.constraints.add(Constraints.POSITIVE.isValid);
         return this;
     }
 
     public NumberSchema required() {
-        this.constraints.add(Constraints.REQUIRED);
+        this.constraints.add(Constraints.REQUIRED.isValid);
         return this;
     }
 
     public NumberSchema range(int minValue, int maxValue) {
         this.min = minValue;
         this.max = maxValue;
-        this.constraints.add(Constraints.RANGE);
+        this.constraints.add(Constraints.RANGE.isValid);
         return this;
     }
 

@@ -1,40 +1,30 @@
 package hexlet.code.schemas;
 
-import java.util.HashSet;
-import java.util.Set;
 import java.util.function.BiPredicate;
 
 import hexlet.code.Schema;
 
-public class StringSchema implements Schema, BaseSchema {
-    private final Set<Constraints> constraints = new HashSet<>(Set.of(Constraints.IS_STRING));
+public class StringSchema extends AbstractSchema<StringSchema> implements Schema, BaseSchema {
     private int minLength;
     private String substringToContain;
 
-    @Override
-    public boolean isValid(Object value) {
-        for (Constraints constraint : Constraints.values()) {
-            if (constraints.contains(constraint) && !constraint.isValid.test(this, value)) {
-                return false;
-            }
-        }
-
-        return true;
+    public StringSchema() {
+        constraints.add(Constraints.IS_STRING.isValid);
     }
 
     public StringSchema required() {
-        constraints.add(Constraints.REQUIRED);
+        constraints.add(Constraints.REQUIRED.isValid);
         return this;
     }
 
     public StringSchema minLength(Integer length) {
-        constraints.add(Constraints.MIN_LENGTH);
+        constraints.add(Constraints.MIN_LENGTH.isValid);
         this.minLength = length;
         return this;
     }
 
     public Schema contains(String substring) {
-        constraints.add(Constraints.CONTAINS);
+        constraints.add(Constraints.CONTAINS.isValid);
         this.substringToContain = substring;
         return this;
     }

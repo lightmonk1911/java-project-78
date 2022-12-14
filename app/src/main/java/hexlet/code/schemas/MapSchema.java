@@ -1,42 +1,32 @@
 package hexlet.code.schemas;
 
-import java.util.HashSet;
 import java.util.Map;
-import java.util.Set;
 import java.util.function.BiPredicate;
 
 import hexlet.code.Schema;
 
-public class MapSchema implements Schema {
-    private final Set<Constraints> constraints = new HashSet<>(Set.of(Constraints.IS_MAP));
+public class MapSchema extends AbstractSchema<MapSchema> implements Schema {
     private int size;
     private Map<?, BaseSchema> shape;
 
-    @Override
-    public boolean isValid(Object value) {
-        for (Constraints constraint : Constraints.values()) {
-            if (constraints.contains(constraint) && !constraint.isValid.test(this, value)) {
-                return false;
-            }
-        }
-
-        return true;
+    public MapSchema() {
+        constraints.add(Constraints.IS_MAP.isValid);
     }
 
     public MapSchema required() {
-        constraints.add(Constraints.REQUIRED);
+        constraints.add(Constraints.REQUIRED.isValid);
         return this;
     }
 
     public MapSchema sizeof(Integer sizeValue) {
-        constraints.add(Constraints.SIZE_OF);
+        constraints.add(Constraints.SIZE_OF.isValid);
         this.size = sizeValue;
         return this;
     }
 
     public MapSchema shape(Map<?, BaseSchema> schemas) {
         this.shape = schemas;
-        constraints.add(Constraints.SHAPE);
+        constraints.add(Constraints.SHAPE.isValid);
         return this;
     }
 
