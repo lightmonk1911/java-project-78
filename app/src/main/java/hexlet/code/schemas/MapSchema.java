@@ -1,42 +1,27 @@
 package hexlet.code.schemas;
 
 import java.util.Map;
-import java.util.function.BiPredicate;
+import java.util.Objects;
 
-import hexlet.code.Schema;
-
-public final class MapSchema extends AbstractSchema<MapSchema> implements Schema {
-    private int size;
-    private Map<?, BaseSchema> shape;
-
+public final class MapSchema extends BaseSchema {
     public MapSchema() {
-        constraints.add(Constraints.IS_MAP.isValid);
+        addCheck("", value -> value instanceof Map || value == null);
     }
 
     public MapSchema required() {
-        constraints.add(Constraints.REQUIRED.isValid);
+        addCheck("required", Objects::nonNull);
         return this;
     }
 
-    public MapSchema sizeof(Integer sizeValue) {
-        constraints.add(Constraints.SIZE_OF.isValid);
-        this.size = sizeValue;
+    public MapSchema sizeof(Integer size) {
+        addCheck("sizeof", value -> ((Map<?, ?>) value).size() == size);
         return this;
     }
 
-    public MapSchema shape(Map<?, BaseSchema> schemas) {
-        this.shape = schemas;
-        constraints.add(Constraints.SHAPE.isValid);
-        return this;
-    }
-
-    private enum Constraints {
-        IS_MAP((schema, value) -> value instanceof Map || value == null),
-        REQUIRED((schema, value) -> value != null),
-        SIZE_OF((schema, value) -> ((Map<?, ?>) value).size() == schema.size),
-        SHAPE((schema, value) -> {
+    public MapSchema shape(Map<?, BaseSchema> shape) {
+        addCheck("shape", value -> {
             Map<?, ?> checkedVal = (Map<?, ?>) value;
-            for (Map.Entry<?, BaseSchema> baseSchema : schema.shape.entrySet()) {
+            for (Map.Entry<?, BaseSchema> baseSchema : shape.entrySet()) {
                 if (!baseSchema.getValue().isValid(checkedVal.get(baseSchema.getKey()))) {
                     return false;
                 }
@@ -44,10 +29,7 @@ public final class MapSchema extends AbstractSchema<MapSchema> implements Schema
 
             return true;
         });
-        private final BiPredicate<MapSchema, Object> isValid;
 
-        Constraints(BiPredicate<MapSchema, Object> validate) {
-            this.isValid = validate;
-        }
+        return this;
     }
 }

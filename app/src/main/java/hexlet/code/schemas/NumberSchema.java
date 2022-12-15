@@ -1,44 +1,26 @@
 package hexlet.code.schemas;
 
-import java.util.function.BiPredicate;
+import java.util.Objects;
 
 import hexlet.code.Schema;
 
-public final class NumberSchema extends AbstractSchema<NumberSchema> implements Schema, BaseSchema {
-    private int min;
-    private int max;
-
+public final class NumberSchema extends BaseSchema implements Schema {
     public NumberSchema() {
-        this.constraints.add(Constraints.IS_NUMBER.isValid);
+        addCheck("isNumber", value -> value == null || value instanceof Number);
     }
 
     public NumberSchema positive() {
-        this.constraints.add(Constraints.POSITIVE.isValid);
+        addCheck("isPositive", value -> value == null || ((int) value) > 0);
         return this;
     }
 
     public NumberSchema required() {
-        this.constraints.add(Constraints.REQUIRED.isValid);
+        addCheck("required", Objects::nonNull);
         return this;
     }
 
-    public NumberSchema range(int minValue, int maxValue) {
-        this.min = minValue;
-        this.max = maxValue;
-        this.constraints.add(Constraints.RANGE.isValid);
+    public NumberSchema range(int min, int max) {
+        this.addCheck("range", value -> value == null || ((int) value) >= min && (int) value <= max);
         return this;
-    }
-
-    private enum Constraints {
-        IS_NUMBER((schema, value) -> value == null || value instanceof Number),
-        REQUIRED((schema, value) -> value != null),
-        POSITIVE((schema, value) -> value == null || ((int) value) > 0),
-        RANGE((schema, value) -> value == null || ((int) value) >= schema.min && (int) value <= schema.max);
-
-        private final BiPredicate<NumberSchema, Object> isValid;
-
-        Constraints(BiPredicate<NumberSchema, Object> validate) {
-            this.isValid = validate;
-        }
     }
 }
