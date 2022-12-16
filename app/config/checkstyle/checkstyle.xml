@@ -97,6 +97,7 @@
     <!-- </module> -->
 
     <module name="TreeWalker">
+        <module name="DesignForExtension"/>
 
         <!-- Checks for Javadoc comments.                     -->
         <!-- See https://checkstyle.org/config_javadoc.html -->

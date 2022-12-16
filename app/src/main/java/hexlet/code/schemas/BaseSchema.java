@@ -8,7 +8,12 @@ import hexlet.code.Schema;
 public abstract class BaseSchema implements Schema {
 
     protected LinkedHashMap<String, Predicate<Object>> checks = new LinkedHashMap<>();
-
+    /**
+     * Determines if the given object is valid.
+     *
+     * @param value The value to be validated.
+     * @return true if the object is valid, false otherwise.
+     */
     @Override
     public boolean isValid(Object value) {
         for (var constraint : checks.values()) {
