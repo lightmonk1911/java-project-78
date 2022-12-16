@@ -8,7 +8,7 @@ public final class StringSchema extends BaseSchema implements Schema {
     }
 
     public StringSchema required() {
-        addCheck("required", value -> value != null && ((String) value).isEmpty());
+        addCheck("required", value -> value != null && !((String) value).isEmpty());
         return this;
     }
 
