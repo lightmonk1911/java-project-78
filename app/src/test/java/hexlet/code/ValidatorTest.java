@@ -28,8 +28,6 @@ final class ValidatorTest {
     void stringSchema() {
         StringSchema schema = validator.string();
 
-        assertFalse(schema.isValid(1));
-
         assertTrue(schema.isValid(""));
         assertTrue(schema.isValid(null));
 

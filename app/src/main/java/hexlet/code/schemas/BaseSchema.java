@@ -8,6 +8,11 @@ import hexlet.code.Schema;
 public abstract class BaseSchema implements Schema {
 
     protected LinkedHashMap<String, Predicate<Object>> checks = new LinkedHashMap<>();
+
+    protected BaseSchema() {
+        addCheck("required", value -> true);
+    }
+
     /**
      * Determines if the given object is valid.
      *

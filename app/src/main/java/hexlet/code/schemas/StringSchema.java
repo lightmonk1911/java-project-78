@@ -3,12 +3,8 @@ package hexlet.code.schemas;
 import hexlet.code.Schema;
 
 public final class StringSchema extends BaseSchema implements Schema {
-    public StringSchema() {
-        addCheck("isString", value -> value instanceof String || value == null);
-    }
-
     public StringSchema required() {
-        addCheck("required", value -> value != null && !((String) value).isEmpty());
+        addCheck("required", value -> value instanceof String && !((String) value).isEmpty());
         return this;
     }
 
